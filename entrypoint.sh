@@ -40,6 +40,12 @@ if [ "$MYSQL_DATABASE" ]; then
 	echo "CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\` ;" | "${mysql[@]}"
 fi
 
+"${mysql[@]}" <<-EOSQL
+	CREATE USER 'root'@'%';
+	GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;
+	FLUSH PRIVILEGES ;
+EOSQL
+
 if ! kill -s TERM "$pid" || ! wait "$pid"; then
 	echo >&2 'MySQL init process failed.'
 	exit 1
