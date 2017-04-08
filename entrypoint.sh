@@ -3,6 +3,7 @@
 #set -eo pipefail
 #
 sed -i "s/;*datadir\s*=.*/datadir = \/dev\/shm/g" /etc/mysql/my.cnf
+sed -i "s/#*bind-address/#bind-address/g" /etc/mysql/my.cnf
 
 _get_config() {
 	local conf="$1"; shift
@@ -46,4 +47,4 @@ echo
 echo 'MySQL init process done. Ready for start up.'
 echo
 
-exec "mysqld"
+exec "$@"
