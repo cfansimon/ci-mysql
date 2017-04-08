@@ -19,6 +19,8 @@ SOCKET="$(_get_config 'socket')"
 mysqld --skip-networking --socket="${SOCKET}" &
 pid="$!"
 
+echo "pid: ${pid}"
+
 mysql=( mysql --protocol=socket -uroot -hlocalhost --socket="${SOCKET}" )
 
 for i in {30..0}; do
